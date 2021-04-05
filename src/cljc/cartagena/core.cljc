@@ -45,5 +45,29 @@
   (-> (empty-hand)
       (deal (draw 6)))
   (initial-hand)
-  (init-players ["Peter" "Ralph"])
+  (init-players ["Peter" "Ralph"]))
+
+(defn board-seq
+  "Create board sequence of spaces."
+  []
+  (flatten [:start (repeatedly 6 #(shuffle symbols)) :sloop]))
+
+(defn init-space
+  "Create a board space with n pieces for each player color."
+  [playing-colors n]
+  {:pieces (zipmap playing-colors (repeat n))})
+
+(defn init-board
+  "Initialise board and player pieces."
+  [playing-colors]
+  (mapv (fn [s]
+          (let [n (if (= :start s) 6 0)]
+            (-> (init-space playing-colors n)
+                (assoc :symbol s))))
+        (board-seq)))
+
+(comment
+  (board-seq)
+  (init-space [:red :yellow] 6)
+  (init-board [:red :yellow])
   )
