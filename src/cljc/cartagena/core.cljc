@@ -71,3 +71,22 @@
   (init-space [:red :yellow] 6)
   (init-board [:red :yellow])
   )
+
+(defn turn-seq
+  "Create a turn sequence map.
+   Mapping current player to next player"
+  [playing-colors]
+  (zipmap playing-colors (rest (cycle playing-colors))))
+
+(defn init-game
+  "Initialise game state.
+   players should be a seq of string names."
+  [players]
+  (let [p (init-players players)]
+    {:players p
+     :next-turn (turn-seq (keys p))
+     :board (init-board (keys p))}))
+
+(comment
+  (init-game ["Peter" "John"])
+  )

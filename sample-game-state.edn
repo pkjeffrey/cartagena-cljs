@@ -1,0 +1,43 @@
+{:players
+ {:red {:name "Peter", :cards {:sword 0, :parrot 0, :hook 1, :skull 1, :treasure 2, :rum 2}, :actions 0}
+  :yellow {:name "John", :cards {:sword 2, :parrot 1, :hook 0, :skull 1, :treasure 1, :rum 1}, :actions 0}}
+ :next-turn {:red :yellow, :yellow :red}
+ :board
+ [{:pieces {:red 6, :yellow 6}, :symbol :start}
+  {:pieces {:red 0, :yellow 0}, :symbol :rum}
+  {:pieces {:red 0, :yellow 0}, :symbol :sword}
+  {:pieces {:red 0, :yellow 0}, :symbol :skull}
+  {:pieces {:red 0, :yellow 0}, :symbol :treasure}
+  {:pieces {:red 0, :yellow 0}, :symbol :hook}
+  {:pieces {:red 0, :yellow 0}, :symbol :parrot}
+  {:pieces {:red 0, :yellow 0}, :symbol :hook}
+  {:pieces {:red 0, :yellow 0}, :symbol :treasure}
+  {:pieces {:red 0, :yellow 0}, :symbol :parrot}
+  {:pieces {:red 0, :yellow 0}, :symbol :skull}
+  {:pieces {:red 0, :yellow 0}, :symbol :rum}
+  {:pieces {:red 0, :yellow 0}, :symbol :sword}
+  {:pieces {:red 0, :yellow 0}, :symbol :rum}
+  {:pieces {:red 0, :yellow 0}, :symbol :sword}
+  {:pieces {:red 0, :yellow 0}, :symbol :hook}
+  {:pieces {:red 0, :yellow 0}, :symbol :treasure}
+  {:pieces {:red 0, :yellow 0}, :symbol :skull}
+  {:pieces {:red 0, :yellow 0}, :symbol :parrot}
+  {:pieces {:red 0, :yellow 0}, :symbol :hook}
+  {:pieces {:red 0, :yellow 0}, :symbol :skull}
+  {:pieces {:red 0, :yellow 0}, :symbol :sword}
+  {:pieces {:red 0, :yellow 0}, :symbol :treasure}
+  {:pieces {:red 0, :yellow 0}, :symbol :parrot}
+  {:pieces {:red 0, :yellow 0}, :symbol :rum}
+  {:pieces {:red 0, :yellow 0}, :symbol :parrot}
+  {:pieces {:red 0, :yellow 0}, :symbol :rum}
+  {:pieces {:red 0, :yellow 0}, :symbol :sword}
+  {:pieces {:red 0, :yellow 0}, :symbol :treasure}
+  {:pieces {:red 0, :yellow 0}, :symbol :skull}
+  {:pieces {:red 0, :yellow 0}, :symbol :hook}
+  {:pieces {:red 0, :yellow 0}, :symbol :hook}
+  {:pieces {:red 0, :yellow 0}, :symbol :treasure}
+  {:pieces {:red 0, :yellow 0}, :symbol :parrot}
+  {:pieces {:red 0, :yellow 0}, :symbol :skull}
+  {:pieces {:red 0, :yellow 0}, :symbol :sword}
+  {:pieces {:red 0, :yellow 0}, :symbol :rum}
+  {:pieces {:red 0, :yellow 0}, :symbol :sloop}]}
