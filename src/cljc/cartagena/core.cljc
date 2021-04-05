@@ -2,7 +2,9 @@
 
 (def colors [:red :yellow :green :blue :brown])
 (def symbols [:sword :parrot :hook :skull :treasure :rum])
+(def board-segments 6)
 (def pirates 6)
+(def starting-cards 6)
 
 (defn draw
   "Draw n cards from the deck."
@@ -23,7 +25,7 @@
 (defn initial-hand
   "Create an intial hand of cards for a player."
   []
-  (deal (empty-hand) (draw 6)))
+  (deal (empty-hand) (draw starting-cards)))
 
 (defn init-players
   "Initialise players and their hands.
@@ -38,19 +40,19 @@
 
 (comment
   (draw 1)
-  (draw 6)
+  (draw starting-cards)
   (empty-hand)
   (-> (empty-hand)
       (deal [:sword :parrot]))
   (-> (empty-hand)
-      (deal (draw 6)))
+      (deal (draw starting-cards)))
   (initial-hand)
-  (init-players ["Peter" "Ralph"]))
+  (init-players ["Peter" "John"]))
 
 (defn board-seq
   "Create board sequence of spaces."
   []
-  (flatten [:start (repeatedly 6 #(shuffle symbols)) :sloop]))
+  (flatten [:start (repeatedly board-segments #(shuffle symbols)) :sloop]))
 
 (defn init-space
   "Create a board space with n pieces for each player color."
@@ -61,14 +63,14 @@
   "Initialise board and player pieces."
   [playing-colors]
   (mapv (fn [s]
-          (let [n (if (= :start s) 6 0)]
+          (let [n (if (= :start s) pirates 0)]
             (-> (init-space playing-colors n)
                 (assoc :symbol s))))
         (board-seq)))
 
 (comment
   (board-seq)
-  (init-space [:red :yellow] 6)
+  (init-space [:red :yellow] pirates)
   (init-board [:red :yellow])
   )
 
