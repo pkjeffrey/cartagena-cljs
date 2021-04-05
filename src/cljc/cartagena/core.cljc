@@ -5,6 +5,7 @@
 (def board-segments 6)
 (def pirates 6)
 (def starting-cards 6)
+(def turn-actions 3)
 
 (defn draw
   "Draw n cards from the deck."
@@ -92,3 +93,77 @@
 (comment
   (init-game ["Peter" "John"])
   )
+
+(defn player-has-card?
+  "Returns true if player has the card."
+  [hand symbol]
+  (pos? (get hand symbol)))
+
+(defn player-on-space?
+  "Returns true if player has a piece on space."
+  [space player]
+  (pos? (get space player)))
+
+(defn player-wins?
+  "Returns true if player has all their pieces on sloop space."
+  [sloop player]
+  (= pirates (get sloop player)))
+
+(defn piece-count
+  "Returns the count of the number of pieces on a space."
+  [space]
+  (reduce + (vals space)))
+
+(defn space-occupied?
+  "Returns true if space is occupied by at least one piece."
+  [space]
+  (pos? (piece-count space)))
+
+(defn space-unoccupied?
+  "Returns true if space is unoccupied by any pieces."
+  [space]
+  (not (space-occupied? space)))
+
+(defn prev-space
+  "Returns the space index player can move back to.
+   From starting space, the first space backwards
+   occupied by 1 or 2 pieces, or the start space."
+  [board from]
+  (or (->> (range (dec from) 0 -1)
+           (filter #(< 0 (piece-count (get-in board [% :pieces])) 3))
+           first)
+      0))
+
+(defn next-space
+  "Returns the space index player can move forward to.
+   From starting space, the first unoccupied space
+   forwards with the symbol, or the sloop space."
+  [board from symbol]
+  (or (->> (range (inc from) (count board))
+           (filter #(and (= symbol (get-in board [% :symbol]))
+                         (space-unoccupied? (get-in board [% :pieces]))))
+           first)
+      (dec (count board))))
+
+(defn active-player
+  "Returns the active player's color."
+  [players]
+  (->> (filter #(pos? (:actions (val %)))
+               players)
+       first
+       key))
+
+(defn start-turn
+  "Starts a players turn."
+  [game player]
+  (assoc-in game [:players player :actions] turn-actions))
+
+(defn use-action
+  "Use a player's action and when none left, next player."
+  [game]
+  (let [active-player (active-player (:players game))]
+    (-> game
+        (update-in [:players active-player :actions] dec)
+        (#(if (zero? (get-in % [:players active-player :actions]))
+            (start-turn % (get-in % [:next-turn active-player]))
+            %)))))
