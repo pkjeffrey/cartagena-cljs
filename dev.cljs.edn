@@ -1,1 +1,2 @@
-{:main cartagena.core}
+^{:css-dirs ["resources/public"]}
+{:main cartagena.app}
