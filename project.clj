@@ -7,7 +7,9 @@
   :profiles
   {:dev {:dependencies [[com.bhauman/figwheel-main "0.2.12"]
                         [com.bhauman/rebel-readline-cljs "0.1.4"]
-                        [org.clojure/clojurescript "1.10.773"]]
+                        [org.clojure/clojurescript "1.10.773"]
+                        [re-frame "1.2.0"]
+                        [day8.re-frame/re-frame-10x "1.0.2"]]
          :resource-paths ["target"]
          :clean-targets ^{:protect false} ["target"]}}
 
