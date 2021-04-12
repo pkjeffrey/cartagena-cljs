@@ -2,3 +2,32 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 1rem;
+}
+
+.player-input {
+    display: grid;
+    place-items: center;
+}
+.player-input div {
+    display: grid;
+    place-items: center;
+    font-size: 120%;
+    border: 1px solid black;  
+    border-radius: 1rem;
+}
+.player-input h1 {
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+.player-input p,
+.player-input input {
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+.player-input .btn {
+    border-radius: 0.5rem;
+}
