@@ -5,12 +5,12 @@
 
 body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    padding: 1rem;
 }
 
 .player-input {
     display: grid;
     place-items: center;
+    margin: 1rem;
 }
 .player-input div {
     display: grid;
@@ -20,7 +20,7 @@ body {
     border-radius: 1rem;
 }
 .player-input h1 {
-    padding: 1rem;
+    padding: 1rem 2rem;
     border-bottom: 1px solid black;
 }
 .player-input p,
@@ -29,5 +29,11 @@ body {
     padding: 0.5rem;
 }
 .player-input .btn {
+    margin-bottom: 1rem;
     border-radius: 0.5rem;
+    background-color: hsl(141, 53%, 53%);
+    font-weight: bold;
+}
+.player-input .btn:disabled {
+    background-color: hsl(0, 0%, 86%);
 }

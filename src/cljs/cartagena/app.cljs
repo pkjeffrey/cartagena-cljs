@@ -5,38 +5,31 @@
             [reagent.dom :as rdom]
             [re-frame.core :as rf]))
 
-(defn player-input [a ph]
-  [:input {:type "text"
-           :placeholder ph
-           :value @a
-           :on-change #(reset! a (-> % .-target .-value))}])
+(defn player-input [players id]
+  [:input {:type :text
+           :value (get @players id)
+           :on-change #(swap! players assoc id (-> % .-target .-value))}])
 
 (defn new-game []
-  (let [player1 (r/atom nil)
-        player2 (r/atom nil)
-        player3 (r/atom nil)
-        player4 (r/atom nil)
-        player5 (r/atom nil)]
+  (let [players (r/atom {})]
     (fn []
       [:div.player-input
        [:div
         [:h1 "Cartagena-cljs"]
         [:p "Enter player names:"]
-        [player-input player1 "Player one (required)"]
-        [player-input player2 "Player two (required)"]
-        [player-input player3 "Player three"]
-        [player-input player4 "Player four"]
-        [player-input player5 "Player five"]
-        [:input.btn {:type     "button"
+        (for [i (range 1 6)]
+          ^{:key i} [player-input players i])
+        [:input.btn {:type     :button
                      :value    "Start Game"
-                     :disabled (or (str/blank? @player1)
-                                   (str/blank? @player2))
-                     :on-click #(rf/dispatch [:new-game (->> [@player1 @player2 @player3 @player4 @player5]
-                                                             (filter (comp not str/blank?)))])}]]])))
+                     :disabled (or (str/blank? (get @players 1))
+                                   (str/blank? (get @players 2)))
+                     :on-click (fn []
+                                 (rf/dispatch [:new-game (->> (vals @players)
+                                                              (filter (comp not str/blank?))
+                                                              vec)]))}]]])))
 
 (defn page []
   [:div
    [new-game]])
 
-(rdom/render [#'page]
-             (.getElementById js/document "app"))
+(rdom/render [page] (.getElementById js/document "app"))
