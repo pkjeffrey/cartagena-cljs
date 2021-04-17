@@ -30,26 +30,40 @@
 
 (defn space [i]
   (let [{:keys [symbol pieces]} @(rf/subscribe [:game/board-space i])
+        img (str (name symbol) ".png")
         colors @(rf/subscribe [:game/player-colors])
         tokens (reduce (fn [t c]
                          (concat t (repeat (get pieces c) c)))
                        [] colors)]
     (fn []
-      [:div.space {:id (str "space-" i)}
-       (name symbol) " " (for [t tokens]
-                           [:div.token {:class (name t)}])])))
+      [:div.space {:id    (str "space-" i)
+                   :style {:background-image (str "url('" img "')")}}
+       (for [t tokens]
+         [:div.token {:class (name t)}])])))
 
 (defn board []
   [:div.board
    (for [i (range @(rf/subscribe [:game/board-space-count]))]
-     ^{:key i}[space i])])
+     ^{:key i}[space i])
+   [:div#icon-attrib
+    "Icons made by "
+    [:a {:href "https://www.flaticon.com/authors/smashicons"
+         :target :_blank
+         :title "Smashicons"} "Smashicons"]
+    " from "
+    [:a {:href "https://www.flaticon.com/"
+         :target :_blank
+         :title "Flaticon"}"www.flaticon.com"]]])
+
+(defn players []
+  [:div.players
+   (for [[key player] @(rf/subscribe [:game/players])]
+     ^{:key key}[:p (:name player)])])
 
 (defn game []
-  [:div
-   [:p "playing"]
-   (for [[key player] @(rf/subscribe [:game/players])]
-     ^{:key key}[:p (:name player)])
-   [board]])
+  [:div.game
+   [board]
+   [players]])
 
 (defn page []
   [:div
