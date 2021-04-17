@@ -28,8 +28,33 @@
                                                               (filter (comp not str/blank?))
                                                               vec)]))}]]])))
 
+(defn space [i]
+  (let [{:keys [symbol pieces]} @(rf/subscribe [:game/board-space i])
+        colors @(rf/subscribe [:game/player-colors])
+        tokens (reduce (fn [t c]
+                         (concat t (repeat (get pieces c) c)))
+                       [] colors)]
+    (fn []
+      [:div.space {:id (str "space-" i)}
+       (name symbol) " " (for [t tokens]
+                           [:div.token {:class (name t)}])])))
+
+(defn board []
+  [:div.board
+   (for [i (range @(rf/subscribe [:game/board-space-count]))]
+     ^{:key i}[space i])])
+
+(defn game []
+  [:div
+   [:p "playing"]
+   (for [[key player] @(rf/subscribe [:game/players])]
+     ^{:key key}[:p (:name player)])
+   [board]])
+
 (defn page []
   [:div
-   [new-game]])
+   (if (= :playing @(rf/subscribe [:game-state]))
+     [game]
+     [new-game])])
 
 (rdom/render [page] (.getElementById js/document "app"))

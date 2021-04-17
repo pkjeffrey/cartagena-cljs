@@ -9,12 +9,12 @@ body {
 
 .player-input {
     display: grid;
-    place-items: center;
+    justify-items: center;
     margin: 1rem;
 }
 .player-input div {
-    display: grid;
-    place-items: center;
+    display: inline-flex;
+    flex-direction: column;
     font-size: 120%;
     border: 1px solid black;  
     border-radius: 1rem;
@@ -36,4 +36,26 @@ body {
 }
 .player-input .btn:disabled {
     background-color: hsl(0, 0%, 86%);
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(12, 70px);
+    grid-template-rows: repeat(7, 70px);
+}
+.space {
+    border: 1px solid grey; 
+}
+.token {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    border: 1px solid black;
+}
+.token.red {
+    background-color: red;
+}
+.token.yellow {
+    background-color: yellow;
 }

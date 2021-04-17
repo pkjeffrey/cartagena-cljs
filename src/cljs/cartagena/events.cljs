@@ -11,12 +11,42 @@
               :winner nil
               :game (c/init-game players)))))
 
-(rf/reg-event-db
- :name
- (fn [db [_ name]]
-   (assoc db :name name)))
+(rf/reg-sub
+ :game-state
+ (fn [db _]
+   (:game-state db)))
 
 (rf/reg-sub
- :name
+ :game
  (fn [db _]
-   (:name db)))
+   (:game db)))
+
+(rf/reg-sub
+ :game/board
+ :<- [:game]
+ (fn [game _]
+   (:board game)))
+
+(rf/reg-sub
+ :game/board-space-count
+ :<- [:game/board]
+ (fn [board _]
+   (count board)))
+
+(rf/reg-sub
+ :game/board-space
+ :<- [:game/board]
+ (fn [board [_ i]]
+   (nth board i)))
+
+(rf/reg-sub
+ :game/players
+ :<- [:game]
+ (fn [game _]
+   (:players game)))
+
+(rf/reg-sub
+ :game/player-colors
+ :<- [:game/players]
+ (fn [players _]
+   (take (count players) c/colors)))
