@@ -32,14 +32,16 @@
   (let [{:keys [symbol pieces]} @(rf/subscribe [:game/board-space i])
         img (str (name symbol) ".png")
         colors @(rf/subscribe [:game/player-colors])
-        tokens (reduce (fn [t c]
-                         (concat t (repeat (get pieces c) c)))
-                       [] colors)]
+        tokens (->> colors
+                    (reduce (fn [t c]
+                              (concat t (repeat (get pieces c) c)))
+                            [])
+                    (zipmap (range)))]
     (fn []
       [:div.space {:id    (str "space-" i)
                    :style {:background-image (str "url('" img "')")}}
-       (for [t tokens]
-         [:div.token {:class (name t)}])])))
+       (for [[k t] tokens]
+         ^{:key k}[:div.token {:class (name t)}])])))
 
 (defn board []
   [:div.board
@@ -55,10 +57,21 @@
          :target :_blank
          :title "Flaticon"}"www.flaticon.com"]]])
 
+(defn player-info [c]
+  (let [player @(rf/subscribe [:game/player c])
+        active-player @(rf/subscribe [:game/active-player])
+        active? (= c active-player)]
+    [:div.player-info
+     [:h1 {:class (name c)} (:name player)]
+     (when active?
+       [:div
+        [:p "Actions: " (:actions player)]
+        [:p "Cards:"]])]))
+
 (defn players []
   [:div.players
-   (for [[key player] @(rf/subscribe [:game/players])]
-     ^{:key key}[:p (:name player)])])
+   (for [p @(rf/subscribe [:game/player-colors])]
+     ^{:key p}[player-info p])])
 
 (defn game []
   [:div.game

@@ -49,4 +49,19 @@
  :game/player-colors
  :<- [:game/players]
  (fn [players _]
-   (take (count players) c/colors)))
+   (keys players)))
+
+(rf/reg-sub
+ :game/active-player
+ :<- [:game/players]
+ (fn [players _]
+   (->> players
+        (filter #(pos? (:actions (val %))))
+        first
+        key)))
+
+(rf/reg-sub
+ :game/player
+ :<- [:game/players]
+ (fn [players [_ c]]
+   (get players c)))

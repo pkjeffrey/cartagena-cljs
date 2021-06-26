@@ -107,8 +107,20 @@ body {
     height: 15px;
     border-radius: 100%;
 }
-.token.red {background-color: red;}
-.token.yellow {background-color: yellow;}
-.token.green {background-color: green;}
-.token.blue {background-color: blue;}
-.token.brown {background-color: brown;}
+
+.players {
+    margin-left: 5px;
+}
+.player-info {
+    border: 1px solid grey;
+}
+.player-info h1,
+.player-info p {
+    padding: 5px;
+}
+
+.red {background-color: red;}
+.yellow {background-color: yellow;}
+.green {background-color: green;}
+.blue {background-color: blue;}
+.brown {background-color: brown;}
